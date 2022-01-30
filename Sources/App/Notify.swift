@@ -67,7 +67,7 @@ struct ThirdNotify: VaporCronSchedulable {
 }
 
 struct FourthNotify: VaporCronSchedulable {
-    static var expression: String { "25 18 * * *" }
+    static var expression: String { "30 18 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
