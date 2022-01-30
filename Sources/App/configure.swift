@@ -23,7 +23,7 @@ public func configure(_ app: Application) throws {
 //    app.http.server.configuration.port = 80
    
     
-    app.databases.use(.postgres(hostname: "localhost", username: "mihail", password: "", database: "newtgbotdb"), as: .psql)
+    app.databases.use(.postgres(hostname: "localhost", username: "postgres", password: "", database: "newtgbotdb"), as: .psql)
     
     app.migrations.add(CreateUser())
     
