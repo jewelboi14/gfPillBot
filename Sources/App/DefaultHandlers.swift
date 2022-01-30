@@ -25,9 +25,10 @@ final class DefaultBotHandlers {
       
     
     private static func commandGetIdHandler(app: Vapor.Application, bot: TGBotPrtcl) {
-        let handler = TGCommandHandler(commands: ["/getMyId"]) { update, bot in
+        let handler = TGCommandHandler(commands: ["/start"]) { update, bot in
             let userId = Int(update.message!.chat.id)
             let user = User(userId: userId)
+            try update.message?.reply(text: "Привет! Я буду напоминать тебе о том какие препараты принимать и когда! Если возникнут какие-то ошибки, сообщи Мише :)", bot: bot)
             try user.save(on: app.db).wait()
         }
         bot.connection.dispatcher.add(handler)

@@ -12,13 +12,49 @@ import VaporCron
 import Vapor
 import telegram_vapor_bot
 
-struct Notify: VaporCronSchedulable {
-    static var expression: String { "* * * * *" }
+struct FirstNotify: VaporCronSchedulable {
+    static var expression: String { "0 11 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
             for user in users {
-                let params: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "выпей бля таблы")
+                let params: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Яна, доброе утро! Сейчас нужно принять: Венлафаксин 0,75 \n Витамины для волос")
+                do {
+                    try TGBot.shared.sendMessage(params: params)
+                } catch {
+                    
+                }
+            }
+        }
+        
+    }
+}
+
+struct SecondNotify: VaporCronSchedulable {
+    static var expression: String { "0 14 * * *" }
+    
+    static func task(on application: Application) -> EventLoopFuture<Void> {
+        application.db.query(User.self).all().map { users in
+            for user in users {
+                let params: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Как себя чувствуешь? Сейчас нужно принять: Венлафаксин 0,75 \n Амитриптилин 0,25")
+                do {
+                    try TGBot.shared.sendMessage(params: params)
+                } catch {
+                    
+                }
+            }
+        }
+        
+    }
+}
+
+struct ThirdNotify: VaporCronSchedulable {
+    static var expression: String { "0 22 * * *" }
+    
+    static func task(on application: Application) -> EventLoopFuture<Void> {
+        application.db.query(User.self).all().map { users in
+            for user in users {
+                let params: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Скоро спать! Сейчас нужно принять: Карбомазепин 200 \n Амитриптилин 0,25 \n Кветиапин 100 \n Витамины для волос")
                 do {
                     try TGBot.shared.sendMessage(params: params)
                 } catch {
