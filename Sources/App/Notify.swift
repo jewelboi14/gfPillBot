@@ -13,7 +13,7 @@ import Vapor
 import telegram_vapor_bot
 
 struct FirstNotify: VaporCronSchedulable {
-    static var expression: String { "0 11 * * *" }
+    static var expression: String { "0 8 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
@@ -31,7 +31,7 @@ struct FirstNotify: VaporCronSchedulable {
 }
 
 struct SecondNotify: VaporCronSchedulable {
-    static var expression: String { "0 14 * * *" }
+    static var expression: String { "0 11 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
@@ -49,7 +49,7 @@ struct SecondNotify: VaporCronSchedulable {
 }
 
 struct ThirdNotify: VaporCronSchedulable {
-    static var expression: String { "0 22 * * *" }
+    static var expression: String { "0 19 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
@@ -67,7 +67,7 @@ struct ThirdNotify: VaporCronSchedulable {
 }
 
 struct FourthNotify: VaporCronSchedulable {
-    static var expression: String { "30 18 * * *" }
+    static var expression: String { "40 15 * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
