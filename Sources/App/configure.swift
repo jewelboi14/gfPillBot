@@ -14,12 +14,10 @@ public func configure(_ app: Application) throws {
     let firstJob = try app.cron.schedule(FirstNotify.self)
     let secondJob = try app.cron.schedule(SecondNotify.self)
     let thirdJob = try app.cron.schedule(ThirdNotify.self)
-    let fourthJob = try app.cron.schedule(FourthNotify.self)
     app.eventLoopGroup.next().scheduleTask(in: .hours(2000)) {
         firstJob.cancel()
         secondJob.cancel()
         thirdJob.cancel()
-        fourthJob.cancel()
     }
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))

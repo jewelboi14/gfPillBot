@@ -66,21 +66,4 @@ struct ThirdNotify: VaporCronSchedulable {
     }
 }
 
-struct FourthNotify: VaporCronSchedulable {
-    static var expression: String { "40 15 * * *" }
-    
-    static func task(on application: Application) -> EventLoopFuture<Void> {
-        application.db.query(User.self).all().map { users in
-            for user in users {
-                let params: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Скоро спать! Сейчас нужно принять: Карбомазепин 200 \n Амитриптилин 0,25 \n Кветиапин 100 \n Витамины для волос")
-                do {
-                    try TGBot.shared.sendMessage(params: params)
-                } catch {
-                    
-                }
-            }
-        }
-        
-    }
-}
 
