@@ -16,6 +16,7 @@ final class DefaultBotHandlers {
     private static func defaultHandler(app: Vapor.Application, bot: TGBotPrtcl) {
         let handler = TGMessageHandler(filters: (.all && !.command.names(["/ping"]))) { update, bot in
             let params: TGSendMessageParams = .init(chatId: .chat(update.message!.chat.id), text: "Success")
+            
             try bot.sendMessage(params: params)
         }
         bot.connection.dispatcher.add(handler)
@@ -37,7 +38,7 @@ final class DefaultBotHandlers {
     /// add handler for command "/ping"
     private static func commandPingHandler(app: Vapor.Application, bot: TGBotPrtcl) {
         let handler = TGCommandHandler(commands: ["/ping"]) { update, bot in
-            try update.message?.reply(text: "pong", bot: bot)
+            try update.message?.reply(text: Decoder.decodeCats(app: app).wait(), bot: bot)
         }
         bot.connection.dispatcher.add(handler)
     }
