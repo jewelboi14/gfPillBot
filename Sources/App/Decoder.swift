@@ -16,8 +16,6 @@ class Decoder {
             guard response.status == .ok else { throw Abort(.unauthorized) }
             guard let buffer = response.body else { throw Abort(.badRequest) }
             guard let data = String(buffer: buffer).data(using: .utf8) else { throw Abort(.badRequest) }
-            print("buffer \(buffer)")
-            print("buffer \(response)")
             let decoder: JSONDecoder = JSONDecoder()
             do {
                 let decoded = try decoder.decode([Cat].self, from: data)

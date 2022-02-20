@@ -44,18 +44,24 @@ struct FirstCatNotification: VaporCronSchedulable {
 
 struct SecondCatNotification: VaporCronSchedulable {
     
-    static var expression: String { "0 17 * * *" }
+    //static var expression: String { "0 17 * * *" }
+    
+    static var expression: String { "* * * * *" }
     
     static func task(on application: Application) -> EventLoopFuture<Void> {
         application.db.query(User.self).all().map { users in
             for user in users {
                 do {
+                    
                     let decodedUrl = try Decoder.decodeCats(app: application).wait()
-                    let photoParams: TGSendPhotoParams = .init(chatId: .chat(Int64(user.userid)), photo: .url(decodedUrl) )
-                    let messageParams: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Уже вечер??? Вот ваша вторая киса дня!")
+                    print(decodedUrl)
+                  //  let photoParams: TGSendPhotoParams = .init(chatId: .chat(Int64(user.userid)), photo: .url(decodedUrl) )
+                    let firstMessageParams: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: "Уже вечер??? Вот ваша вторая киса дня!")
+                    let secondMessageParams: TGSendMessageParams = .init(chatId: .chat(Int64(user.userid)), text: decodedUrl)
                     do {
-                        try TGBot.shared.sendPhoto(params: photoParams)
-                        try TGBot.shared.sendMessage(params: messageParams)
+                        
+                        try TGBot.shared.sendMessage(params: firstMessageParams)
+                        try TGBot.shared.sendMessage(params: secondMessageParams)
                     } catch {
                         
                     }
